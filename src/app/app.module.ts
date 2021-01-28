@@ -1,14 +1,30 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
+import { MaterialModule } from './material.module';
+import { SignupComponent } from './auth/signup/signup.component';
+import { LoginComponent } from './auth/login/login.component';
+import { TrainingComponent } from './training/training.component';
+import { CurrentTrainingComponent } from './training/current-training/current-training.component';
+import { NewTrainingComponent } from './training/new-training/new-training.component';
+import { PassTrainingComponent } from './training/pass-training/pass-training.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SignupComponent,
+    LoginComponent,
+    TrainingComponent,
+    CurrentTrainingComponent,
+    NewTrainingComponent,
+    PassTrainingComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
