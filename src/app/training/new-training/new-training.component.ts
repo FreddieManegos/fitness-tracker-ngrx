@@ -9,7 +9,7 @@ export class NewTrainingComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
 }
