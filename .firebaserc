@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "ng-fitness-tracker-29b8d": {
+      "hosting": {
+        "ngrxapp": [
+          "ng-fitness-tracker-29b8d"
+        ]
+      }
+    }
+  }
+}
