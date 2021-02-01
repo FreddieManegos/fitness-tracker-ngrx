@@ -9,6 +9,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { environment } from '../environments/environment';
+import { AuthModule } from './auth/auth.module';
 
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
@@ -27,8 +28,6 @@ import { StopTrainingComponent } from './training/current-training/stop-training
 @NgModule({
   declarations: [
     AppComponent,
-    SignupComponent,
-    LoginComponent,
     TrainingComponent,
     CurrentTrainingComponent,
     NewTrainingComponent,
@@ -42,6 +41,7 @@ import { StopTrainingComponent } from './training/current-training/stop-training
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,
+    AuthModule,
     AppRoutingModule,
     FlexLayoutModule,
     FormsModule,
