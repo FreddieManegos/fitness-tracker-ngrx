@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Subject } from 'rxjs';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { UIService } from '../shared/ui.service';
 
 import { Exercise } from './exercise.model';
 
@@ -18,12 +19,13 @@ export class TrainingService {
   private runningExercise: Exercise;
   private fbSubs: Subscription[] = [];
 
-  constructor(private firestore: AngularFirestore) { }
+  constructor(private firestore: AngularFirestore, private uiService: UIService) { }
 
   fetchAvailableExercises() {
     this.fbSubs.push(this.firestore.collection('availableExercises')
       .snapshotChanges()
       .pipe(map(docArray => {
+        // throw(new Error)
         return docArray.map(
           doc => {
             return {
@@ -38,6 +40,10 @@ export class TrainingService {
         console.log(exercises);
         this.availableExercises = exercises;
         this.exercisesChanged.next([...this.availableExercises]);
+      }, error => {
+        this.uiService.loadingStateChanged.next(false);
+        this.uiService.showSnackbar('Fetching Exercises failed, please try again later', null, 3000);
+        this.exercisesChanged.next(null);
       }));
   }
 
