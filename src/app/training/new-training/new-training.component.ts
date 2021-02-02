@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { TrainingService } from '../training.service';
 import { Exercise } from '../exercise.model';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { UIService } from 'src/app/shared/ui.service';
+import * as fromTraining from '../training.reducer';
 
 @Component({
   selector: 'app-new-training',
@@ -14,13 +15,14 @@ import { UIService } from 'src/app/shared/ui.service';
 })
 export class NewTrainingComponent implements OnInit, OnDestroy {
 
-  exercises: Exercise[];
+  exercises$: Observable<Exercise[]>;
   items: Observable<any[]>;
   isLoading = false;
   exerciseSubscription: Subscription;
   private loadingSubscription: Subscription;
 
-  constructor(private trainingService: TrainingService, private uiService: UIService) {
+  constructor(private trainingService: TrainingService,
+    private uiService: UIService, private store: Store<fromTraining.State>) {
     // this.exercises =
     //   firestore.collection('availableExercises')
     //     .snapshotChanges()
@@ -46,12 +48,13 @@ export class NewTrainingComponent implements OnInit, OnDestroy {
         this.isLoading = isLoading;
       }
     );
-    this.exerciseSubscription = this.trainingService.exercisesChanged.subscribe(
-      exercises => {
-        console.log(exercises);
-        this.exercises = exercises;
-      }
-    );
+    this.exercises$ = this.store.select(fromTraining.getAvailableExercises);
+    // this.exerciseSubscription = this.trainingService.exercisesChanged.subscribe(
+    //   exercises => {
+    //     console.log(exercises);
+    //     this.exercises = exercises;
+    //   }
+    // );
     this.trainingService.fetchAvailableExercises();
   }
 
@@ -66,9 +69,9 @@ export class NewTrainingComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.exerciseSubscription) {
-      this.exerciseSubscription.unsubscribe();
-    }
+    // if (this.exerciseSubscription) {
+    //   this.exerciseSubscription.unsubscribe();
+    // }
     if (this.loadingSubscription) {
       this.loadingSubscription.unsubscribe();
     }
