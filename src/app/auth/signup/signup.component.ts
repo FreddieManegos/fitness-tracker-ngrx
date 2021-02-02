@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { UIService } from 'src/app/shared/ui.service';
 import { AuthService } from '../auth.service';
+import * as fromApp from '../../app.reducer';
 
 @Component({
   selector: 'app-signup',
